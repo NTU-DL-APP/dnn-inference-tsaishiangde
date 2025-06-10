@@ -3,12 +3,21 @@ import json
 
 # === Activation functions ===
 def relu(x):
-    # TODO: Implement the Rectified Linear Unit
-    return x
+    """
+    Implement the Rectified Linear Unit (ReLU) activation function
+    ReLU(x) = max(0, x)
+    """
+    return np.maximum(0, x)
 
 def softmax(x):
-    # TODO: Implement the SoftMax function
-    return x
+    """
+    Implement the SoftMax activation function
+    Softmax(x_i) = exp(x_i) / sum(exp(x_j)) for all j
+    """
+    # Subtract max for numerical stability
+    x_shifted = x - np.max(x, axis=-1, keepdims=True)
+    exp_x = np.exp(x_shifted)
+    return exp_x / np.sum(exp_x, axis=-1, keepdims=True)
 
 # === Flatten ===
 def flatten(x):
@@ -40,7 +49,6 @@ def nn_forward_h5(model_arch, weights, data):
                 x = softmax(x)
 
     return x
-
 
 # You are free to replace nn_forward_h5() with your own implementation 
 def nn_inference(model_arch, weights, data):
